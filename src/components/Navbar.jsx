@@ -1,23 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import "./navbar.css";
+import companyLogo from "../assets/images/sltlogo.png";
 const Navbar = () => {
+  const [menuOpen, setMemuOpen] = useState(false);
+
   return (
-    <nav>
-      <ul>
+    <nav className="navBar">
+      {/* <a href="/" className="site-title">SLTMOBITEL </a> */}
+      <Link to="/">
+        <img src={companyLogo} alt="Company Logo" className="company-logo" />
+      </Link>
+      <div
+        className="menu"
+        onClick={() => {
+          setMemuOpen(!menuOpen);
+        }}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div className={`white-background-wrapper ${menuOpen ? 'hidden' : ''}`}>
+        <div className="white-background">
+        <ul className={menuOpen ? "open" : ""}>
         <li>
-          <Link to="/">Home</Link>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <Link to="/about">About Us</Link>
+          <NavLink to="/about">AboutUs</NavLink>
         </li>
         <li>
-          <Link to="/vacancies">Vacancies</Link>
+          <NavLink to="/vacancies">Vacancies</NavLink>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          <NavLink to="/login">Login</NavLink>
         </li>
       </ul>
+        </div>
+      </div>
     </nav>
   );
 };

@@ -10,16 +10,18 @@ import Home from './components/pages/Home';
 function App() {
   return (
     <div className="App">
-     <Navbar/>
-
-     <Routes>
-       <Route path="/" element={<Home />} />
-       <Route path="/about" element={<About />} />
-       <Route path="/login" element={<Login />} />
-       <Route path='/vacancies' element={<Vacancies/>}/>
-    
-       
-     </Routes>
+      <div>
+      <div className="content-container">
+        <Navbar/>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path='/vacancies' element={<Vacancies/>} />
+        </Routes>
+      </div>
+      </div>
+      
     </div>
   );
 }
