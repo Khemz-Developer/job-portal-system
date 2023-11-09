@@ -35,12 +35,6 @@ nav ul li a {
   font-weight: 200;
 }
 
-/* .site-title {
-  text-decoration: none;
-  font-size: 1.5 rem;
-  margin: 1 rem;
-  font-weight: bold;
-} */
 
 .active {
   background-color: #007791; /* Background color with 50% transparency */;
@@ -96,7 +90,7 @@ nav .menu span {
     display: none;
     flex-direction: column;
     width: 40%;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
     align-self: flex-end;
     margin-left: 400px;
   }
@@ -120,3 +114,6 @@ nav .menu span {
     /* Add margins to control spacing as needed */
   }
 }
+
+
+ 

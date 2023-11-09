@@ -7,6 +7,8 @@ import Login from './components/pages/Login';
 import Vacancies from './components/pages/Vacancies';
 import Home from './components/pages/Home';
 
+// import Footer from './components/Footer';
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +21,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path='/vacancies' element={<Vacancies/>} />
         </Routes>
+        {/* <Footer/> */}
       </div>
       </div>
       

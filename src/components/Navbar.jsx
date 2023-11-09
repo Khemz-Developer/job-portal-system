@@ -21,22 +21,22 @@ const Navbar = () => {
         <span></span>
         <span></span>
       </div>
-      <div className={`white-background-wrapper ${menuOpen ? 'hidden' : ''}`}>
-        <div className="white-background">
-        <ul className={menuOpen ? "open" : ""}>
-        <li>
-          <NavLink to="/">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/about">AboutUs</NavLink>
-        </li>
-        <li>
-          <NavLink to="/vacancies">Vacancies</NavLink>
-        </li>
-        <li>
-          <NavLink to="/login">Login</NavLink>
-        </li>
-      </ul>
+      <div className={`white-background-wrapper ${menuOpen ? "hidden" : ""}`}>
+        <div className="">
+          <ul className={menuOpen ? "open" : ""}>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">AboutUs</NavLink>
+            </li>
+            <li>
+              <NavLink to="/vacancies">Vacancies</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
