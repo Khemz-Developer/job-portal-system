@@ -1,15 +1,16 @@
 import React from 'react';
 import "./home.css";
-import Footer from '../Footer';
+
 import Middle from '../Middle';
 
 
 const Home = () => {
   return (
-    <div  >
+    <div className='outer-home-div' >
       <Middle></Middle>
-      <Footer/>
-      <p>hhhh</p>
+      
+      
+      
     </div>
   )
 }
