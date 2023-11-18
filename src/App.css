@@ -1,5 +1,23 @@
-.App {
-  background-color: #fefefe;
+
+*{
+  margin: o;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+/* .content-containerr {
+  margin:  0 ;
+  padding: 3px 0;
+  height: 90px;
+  background: #0e1338;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+ 
+}    */
+
+
+.App{
   height: 100%;
-  width: 100%;
 }

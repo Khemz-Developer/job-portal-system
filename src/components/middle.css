@@ -1,0 +1,32 @@
+/* .outer-div{
+    background-color: #0e1338;
+    height: 400px;
+}
+.sltImage{
+    height: 400px;
+    padding-left: 330px;
+    
+} */
+
+.outer-div {
+    background-color: #0e1338;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sltImage {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio while resizing */
+    max-height: 100%; /* Ensure the image doesn't exceed the height of its container */
+    padding: 0 10%; /* Adjust padding as needed for spacing */
+  }
+  
+  /* Add a media query for smaller screens */
+  @media (max-width: 768px) {
+    .sltImage {
+      padding: 0 5%; /* Adjust padding for smaller screens */
+    }
+  }
+  

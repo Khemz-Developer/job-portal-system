@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
+
+.login-main-div {
+  width: 100%;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+ 
+}
+
+.login-inner-div {
+  height: 570px;
+  width: 1000px;
+  background-color: #ffffff;
+  border-radius: 1cm;
+  margin-top: 20px;
+  /* border: 2px solid black; Add this line to set a black border */
+
+  box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+  -webkit-box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+  -moz-box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+}
+
+.login-image {
+  width: 500px;
+  height: 520px;
+  margin-top: 0px;
+  padding-right: 60px;
+  /* Add any additional styling for the image */
+}
+
+.col-1-login {
+  /* border: 2px solid black; Add this line to set a black border */
+  height: 530px;
+  background-color: #0055a2;
+  margin-right: 60px;
+
+  border-radius: 0.5cm; /* Border radius for the bottom-right corner */
+  margin-top: 20px;
+}
+.col-2-login {
+  background-color: #ffffff;
+
+  margin-right: 20px;
+  height: 530px;
+  margin-top: 20px;
+}
+.login-name {
+  color: #ffffff;
+  font-family: "Lato", sans-serif;
+  padding-top: 40px;
+  font-weight: 500;
+}
+
+.paragraph{
+    color: white;
+}
+
+.link-inline {
+    /* Add your styling for the link here */
+    color: rgb(255, 255, 255); /* Example color */
+    text-decoration: none;
+    /* Add any additional styling as needed */
+    font-family: 'Lato',sans-serif;
+  }
+
+.btn-custom-width{
+    width: 170px;
+    border-radius: 0.3cm;
+    font-family: 'Lato';
+    font-size: 17px;
+    color: rgb(41, 33, 33);
+}
+
+@media (max-width: 768px) {
+  .col-2-login {
+    display: none;
+  }
+
+  .col-1-login {
+    width: 100%;
+    margin-right: 0;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .col-2-login {
+    display: block;
+  }
+}
+
+@media (max-width: 992px) {
+  .col-2-login {
+    display: none;
+  }
+
+  .col-1-login {
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 1cm;
+  }
+}

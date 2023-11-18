@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap');
+
+.home-main-div {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.home-inner-div {
+  height: 660px;
+  width: 1000px;
+  background-color: #ffffff;
+  border-radius: 1cm;
+  margin-top: 20px;
+  /* border: 2px solid black; Add this line to set a black border */
+
+  box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+  -webkit-box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+  -moz-box-shadow: 1px 0px 10px 0px rgba(101, 101, 101, 0.3);
+}
+
+.logo-image {
+  width: 480px;
+  height: 560px;
+  margin-top: 30px;
+  margin-right: 20px;
+  /* Add any additional styling for the image */
+}
+
+.col-1-main {
+  /* border: 2px solid black; Add this line to set a black border */
+  height: 700px;
+  
+}
+
+.col-2-main {
+  background-color: #0055a2;
+
+  border-radius: 0.5cm; /* Border radius for the bottom-right corner */
+  margin-right: 10px;
+  height: 622px;
+  /* margin-top: 20px; */
+  margin-top: 20px;
+}
+
+.register-name {
+  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+  padding-top: 20px;
+}
+
+.form-group label {
+  color: white;
+  padding-top: 20px;
+  padding-bottom: 10px;
+
+}
+
+.btn-submit-reg{
+    padding-top: 20px;
+    
+}
+
+
+
+.register-name{
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+}
+
+.custom-btn{
+    background-color: #ffffff;
+    color: #0055a2;
+    font-weight: 700;
+    border-radius:  3cm;
+    width: 150px;
+    font-size: 20px;
+}
+
+.custom-btn:hover{
+    background-color: #ffffff;
+    color: #282e35;
+    
+}
+form-group input{
+    border-radius: 20cm;
+}
+
+/*sign up responsive part */
+
+@media (max-width: 768px) {
+  .col-1-main {
+    display: none;
+  }
+
+  .col-2-main {
+    width: 100%;
+    margin-right: 0;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .col-1-main {
+    display: block;
+  }
+}
+
+@media (max-width: 992px) {
+  .col-1-main {
+    display: none;
+  }
+
+  .col-2-main {
+    width: 100%;
+    margin-right: 10px;
+    border-radius: 0.8cm;
+  }
+}

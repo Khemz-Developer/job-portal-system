@@ -1,9 +1,16 @@
-import React from 'react'
+import React from 'react';
+import "./home.css";
+
+import Middle from '../Middle';
+
 
 const Home = () => {
   return (
-    <div>
-      <p>eeeeee</p>
+    <div className='outer-home-div' >
+      <Middle></Middle>
+      
+      
+      
     </div>
   )
 }
