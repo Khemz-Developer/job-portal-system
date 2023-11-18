@@ -15,6 +15,18 @@
   width: 98%;
   top: 0;
 }
+/*navbar aluthin demme app.js aken aran*/
+.content-containerr {
+  margin:  0 ;
+  padding: 3px 0;
+  height: 90px;
+  background: #0e1338;
+  position: fixed;
+  top: 0; /* You can adjust the top position as needed */
+  left: 0;
+  width: 100%; 
+ 
+}  
 
 nav ul {
   display: flex;
