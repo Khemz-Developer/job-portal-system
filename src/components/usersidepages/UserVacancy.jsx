@@ -1,19 +1,18 @@
 import React from 'react'
 import UserSidebar from '../UserSidebar'
-import UserStatus from './UserStatus'
-const UserJobStatus = () => {
+import VacancyBox from './VacancyBox'
+const UserVacancy = () => {
   return (
     <div>
         <br></br>
         <br></br>
         <br></br>
       <UserSidebar>
-      <br></br>
-      <UserStatus/>
+      <h3>Dashboard</h3>
+      <VacancyBox/>
       </UserSidebar>
-
     </div>
   )
 }
 
-export default UserJobStatus
+export default UserVacancy

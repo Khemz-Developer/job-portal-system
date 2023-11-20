@@ -1,20 +1,14 @@
 import React from "react";
-import UserSidebar from "../UserSidebar";
-
-
+import VacancyBox from "../usersidepages/VacancyBox";
 
 const Vacancies = () => {
   return (
-    <div>
-        <br></br>
-        <br></br>
-        <br></br>
-      <UserSidebar>
-      <h3>Vacancies</h3>
-      </UserSidebar>
-      
-    </div>
-  );
-};
+      <div>
+      <br></br>
+      <br></br>
+      <VacancyBox/>
+      </div>
+  )
+}
 
 export default Vacancies;

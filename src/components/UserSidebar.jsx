@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import {
-  FaTh,
   FaBars,
-  FaUserAlt,
   FaRegChartBar,
-  
+  FaTh,
+  FaUserAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import "./UserSidebar.css";
@@ -14,13 +13,13 @@ const UserSidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/vacancies",
+      path: "/uservacancy",
       name: "Job Vacancies",
       icon: <FaTh />,
     },
     {
       path: "/apply",
-      name: "Job Apply Form",
+      name: "Job Apply",
       icon: <FaUserAlt />,
     },
     {
@@ -41,7 +40,7 @@ const UserSidebar = ({ children }) => {
       >
         <div className="top_section-user">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo-user">
-            Admin
+            User
           </h1>
           <div style={{ marginLeft: isOpen ? "50px" : "0px" }} className="bars-user">
             <FaBars onClick={toggle} />

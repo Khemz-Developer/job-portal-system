@@ -1,6 +1,6 @@
 import React from 'react'
 import UserSidebar from '../UserSidebar'
-
+import ApplicationForm from './ApplicationForm'
 const UserJopApply = () => {
   return (
     <div>
@@ -8,7 +8,11 @@ const UserJopApply = () => {
         <br></br>
         <br></br>
       <UserSidebar>
-      <h3>Apply Form</h3>
+        <br></br>
+        <br></br>
+        <ApplicationForm/>
+        <br></br>
+        <br></br>
       </UserSidebar>
       
     </div>
@@ -16,3 +20,4 @@ const UserJopApply = () => {
 }
 
 export default UserJopApply
+
