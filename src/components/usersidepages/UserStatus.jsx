@@ -43,9 +43,9 @@ const UserStatus = () => {
                     <Typography variant="h5"  gutterBottom textAlign="center" fontWeight="medium" sx={{ my: '10px' }}>
                         User Status
                     </Typography>
-
+                {/* //stickyHeader aria-label="sticky table" */}
                 <TableContainer sx={{ maxHeight: 500 }}>
-                    <Table stickyHeader aria-label="sticky table">
+                    <Table > 
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (

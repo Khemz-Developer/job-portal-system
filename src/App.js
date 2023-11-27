@@ -3,19 +3,19 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import About from './components/pages/About';
+import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import Vacancies from './components/pages/Vacancies';
-import Home from './components/pages/Home';
 
 import Footer from './components/Footer';
-import SignUp from './components/pages/SignUp';
+import AcceptedCVs from './components/SidePages/AcceptedCVs';
 import JobCreate from './components/SidePages/JobCreate';
 import JobModify from './components/SidePages/JobModify';
 import ReceivedCVs from './components/SidePages/ReceivedCVs';
-import AcceptedCVs from './components/SidePages/AcceptedCVs';
-import UserJopApply from './components/usersidepages/UserJopApply';
+import SignUp from './components/pages/SignUp';
 import UserJobStatus from './components/usersidepages/UserJobStatus';
-
+import UserJopApply from './components/usersidepages/UserJopApply';
+import UserVacancy from './components/usersidepages/UserVacancy';
 function App() {
   return (
     <div className="App">
@@ -40,7 +40,8 @@ function App() {
           <Route path='/accept' element={<AcceptedCVs/>}/>
           <Route path='/received' element={<ReceivedCVs/>}/>
           
-           {/*ROUTE FOR ADMIN PAGES*/}
+           {/*ROUTE FOR USER PAGES*/}
+           <Route path='/uservacancy' element={<UserVacancy/>}/>
            <Route path='/apply' element={<UserJopApply/>}/>
            <Route path='/status' element={<UserJobStatus/>}/>
         </Routes>
