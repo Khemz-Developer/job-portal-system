@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "./navbar.css";
 import companyLogo from "../assets/images/sltlogo.png";
+import "./navbar.css";
 const Navbar = () => {
   const [menuOpen, setMemuOpen] = useState(false);
 
@@ -36,7 +36,7 @@ const Navbar = () => {
                 <NavLink to="/vacancies">Vacancies</NavLink>
               </li>
               <li>
-                <NavLink to="/login">Login</NavLink>
+                <NavLink to="/users/login">Login</NavLink>
               </li>
             </ul>
           </div>

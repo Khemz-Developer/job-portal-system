@@ -29,21 +29,21 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/users/login" element={<Login />} />
           <Route path='/vacancies' element={<Vacancies/>} />
-          <Route path='/signup' element={<SignUp/>}/>
+          <Route path='/users/signup' element={<SignUp/>}/>
 
 
           {/*ROUTE FOR ADMIN PAGES*/}
-          <Route path='/create' element={<JobCreate/>}/>
-          <Route path='/modi' element={<JobModify/>}/>
-          <Route path='/accept' element={<AcceptedCVs/>}/>
-          <Route path='/received' element={<ReceivedCVs/>}/>
+          <Route path='admin/create' element={<JobCreate/>}/>
+          <Route path='admin/modi' element={<JobModify/>}/>
+          <Route path='admin/accept' element={<AcceptedCVs/>}/>
+          <Route path='admin/received' element={<ReceivedCVs/>}/>
           
            {/*ROUTE FOR USER PAGES*/}
-           <Route path='/uservacancy' element={<UserVacancy/>}/>
-           <Route path='/apply' element={<UserJopApply/>}/>
-           <Route path='/status' element={<UserJobStatus/>}/>
+           <Route path='/users/uservacancy' element={<UserVacancy/>}/>
+           <Route path='/users/apply' element={<UserJopApply/>}/>
+           <Route path='/users/status' element={<UserJobStatus/>}/>
         </Routes>
         <Footer/>
       </div>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import {
-  FaTh,
   FaBars,
-  FaUserAlt,
-  FaRegChartBar,
   FaCommentAlt,
+  FaRegChartBar,
+  FaTh,
+  FaUserAlt,
 } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
@@ -15,22 +15,22 @@ const Sidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/create",
+      path: "/admin/create",
       name: "Job Creation",
       icon: <FaTh />,
     },
     {
-      path: "/modi",
+      path: "/admin/modi",
       name: "Job Update",
       icon: <FaUserAlt />,
     },
     {
-      path: "/received",
+      path: "/admin/received",
       name: "Received CVs",
       icon: <FaRegChartBar />,
     },
     {
-      path: "/accept",
+      path: "/admin/accept",
       name: "Accepted CVs",
       icon: <FaCommentAlt />,
     },

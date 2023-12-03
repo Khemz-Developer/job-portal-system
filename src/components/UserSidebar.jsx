@@ -13,17 +13,17 @@ const UserSidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/uservacancy",
+      path: "/users/uservacancy",
       name: "Job Vacancies",
       icon: <FaTh />,
     },
     {
-      path: "/apply",
+      path: "/users/apply",
       name: "Job Apply",
       icon: <FaUserAlt />,
     },
     {
-      path: "/status",
+      path: "/users/status",
       name: "Job Status",
       icon: <FaRegChartBar />,
     },
