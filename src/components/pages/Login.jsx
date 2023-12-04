@@ -1,14 +1,53 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from "../../assets/images/loginn.png";
-import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import './login.css'
+import './login.css';
 
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const handleSubmit = async (event)=>{
+    event.preventDefault();
+
+    try {
+      // Make an HTTP POST request to your backend login endpoint
+      const response = await axios.post('http://localhost:3001/users/login', {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        console.log('Login successful');
+        alert('Login Successfull');
+        const { isAdmin } = response.data;
+        if(isAdmin){
+          navigate('../admin/create');
+        }else{
+          navigate('../users/uservacancy');
+        }
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+      if(error.response.status===401){
+        alert('Password is incorrect');
+      }else if(error.response.status===404){
+        alert('User not found');
+      }
+      // Handle login failure, show an error message, etc.
+    }
+
+  }
+  
+  
   return (
     
       <div>
@@ -20,7 +59,7 @@ const Login = () => {
               <Row className="row-1-login">
                 <Col md={5} className="col-1-login">
                   <h2 className="login-name">Sign In</h2>
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <label htmlFor="email">Email:</label>
                       <input
@@ -28,6 +67,9 @@ const Login = () => {
                         id="email"
                         className="form-control"
                         placeholder="Enter your email"
+                        value={email}
+                        onChange={(e)=>setEmail(e.target.value)}
+                        required
                       />
                     </div>
 
@@ -38,6 +80,9 @@ const Login = () => {
                         id="password"
                         className="form-control"
                         placeholder="Enter your password"
+                        value={password}
+                        onChange={(e)=>setPassword(e.target.value)}
+                        required
                       />
                     </div>
 
@@ -57,7 +102,7 @@ const Login = () => {
                       >
                         Don't You Have Account ?
                       </p>
-                      <Link to="/signup" className="link-inline m-2">
+                      <Link to="/users/signup" className="link-inline m-2">
                         Sign Up
                       </Link>
                     </div>
