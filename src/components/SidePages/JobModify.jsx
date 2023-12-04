@@ -8,7 +8,7 @@ const JobModify = () => {
       <br></br>
       <br></br>
       <Sidebar>
-        <h3>Job Modifification Form</h3>
+        <h3>Job Modification Form</h3>
       </Sidebar>
     </div>
   );
