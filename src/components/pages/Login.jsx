@@ -6,12 +6,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from "../../assets/images/loginn.png";
+import { useAuth } from "../../authContext";
 import './login.css';
-
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
@@ -29,6 +30,7 @@ const Login = () => {
         console.log('Login successful');
         alert('Login Successfull');
         const { isAdmin } = response.data;
+        login();
         if(isAdmin){
           navigate('../admin/create');
         }else{
