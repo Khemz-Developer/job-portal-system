@@ -1,6 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { AuthProvider } from './authContext';
 import Navbar from './components/Navbar';
 import About from './components/pages/About';
 import Home from './components/pages/Home';
@@ -16,7 +17,10 @@ import SignUp from './components/pages/SignUp';
 import UserJobStatus from './components/usersidepages/UserJobStatus';
 import UserJopApply from './components/usersidepages/UserJopApply';
 import UserVacancy from './components/usersidepages/UserVacancy';
+import PrivateRoute from './privateroute';
+
 function App() {
+
   return (
     <div className="App">
       <div>
@@ -25,26 +29,31 @@ function App() {
         
         
         {/* <div className='content-containerr'><Navbar/></div> */}
+        
+        <AuthProvider>
         <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/users/login" element={<Login />} />
           <Route path='/vacancies' element={<Vacancies/>} />
           <Route path='/users/signup' element={<SignUp/>}/>
-
-
-          {/*ROUTE FOR ADMIN PAGES*/}
-          <Route path='admin/create' element={<JobCreate/>}/>
-          <Route path='admin/modi' element={<JobModify/>}/>
-          <Route path='admin/accept' element={<AcceptedCVs/>}/>
-          <Route path='admin/received' element={<ReceivedCVs/>}/>
+          <Route
+          path="/users/login"
+          element={<Login/>}
+          />
           
-           {/*ROUTE FOR USER PAGES*/}
-           <Route path='/users/uservacancy' element={<UserVacancy/>}/>
-           <Route path='/users/apply' element={<UserJopApply/>}/>
-           <Route path='/users/status' element={<UserJobStatus/>}/>
+          {/*ROUTE FOR USER PAGES*/}
+          <Route path="/users/uservacancy" element={<PrivateRoute> <UserVacancy/> </PrivateRoute>}/>
+          <Route path="/users/apply" element={<PrivateRoute> <UserJopApply /> </PrivateRoute>} />
+          <Route path="/users/status"  element={<PrivateRoute> <UserJobStatus /> </PrivateRoute>} />
+          {/*ROUTE FOR ADMIN PAGES*/}
+          <Route path="/admin/create" element={<PrivateRoute> <JobCreate  />  </PrivateRoute>} />
+          <Route path="/admin/modi" element={<PrivateRoute> <JobModify /> </PrivateRoute> } />
+          <Route path="/admin/accept" element={<PrivateRoute><AcceptedCVs  /></PrivateRoute>} />
+          <Route path="/admin/received" element={<PrivateRoute> <ReceivedCVs /> </PrivateRoute>} />
+          
         </Routes>
+        </AuthProvider>
         <Footer/>
       </div>
       </div>

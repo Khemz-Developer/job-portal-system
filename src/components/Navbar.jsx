@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import companyLogo from "../assets/images/sltlogo.png";
+import { useAuth } from "../authContext";
 import "./navbar.css";
 const Navbar = () => {
+  const { isLoggedIn, logout } = useAuth();
   const [menuOpen, setMemuOpen] = useState(false);
 
   return (
@@ -26,8 +28,10 @@ const Navbar = () => {
         <div className={`white-background-wrapper ${menuOpen ? "hidden" : ""}`}>
           <div className="">
             <ul className={menuOpen ? "open" : ""}>
+            {!isLoggedIn && (
+              <>
               <li>
-                <NavLink to="/">Home</NavLink>
+                <NavLink to="/" >Home</NavLink>
               </li>
               <li>
                 <NavLink to="/about">AboutUs</NavLink>
@@ -35,9 +39,19 @@ const Navbar = () => {
               <li>
                 <NavLink to="/vacancies">Vacancies</NavLink>
               </li>
+              </>
+              )}
               <li>
-                <NavLink to="/users/login">Login</NavLink>
+                {isLoggedIn ? (
+                  <NavLink to="/"> 
+                  <button onClick={logout}>Logout</button>
+                  </NavLink>
+                ) : (
+                  <NavLink to="/users/login">Login</NavLink>
+                )}
               </li>
+              
+            
             </ul>
           </div>
         </div>

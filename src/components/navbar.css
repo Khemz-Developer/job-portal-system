@@ -25,7 +25,7 @@
   top: 0; /* You can adjust the top position as needed */
   left: 0;
   width: 100%;
-  z-index: 1; 
+  z-index: 100; 
 }  
 
 nav ul {
@@ -49,23 +49,38 @@ nav ul li a {
   font-weight: 200;
 }
 
+button{
+  padding: 0.3rem 1rem;
+  
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
 
-.active {
+button:hover{
+  background-color: #007791;
+  color: white;
+}
+
+
+.active{
   background-color: #007791; /* Background color with 50% transparency */;
   height: 30px;
   padding-top: 2px;
-  transition: all 0.5s ease-in-out;
+  
   color: white;
   font-weight: 600;
 }
 
 /* nav ul li a:not(.active):hover {
-  background-color: #040427;
+  background-color: #007791;
   color: white;
-  border-radius: 4px;
-   transition: all 0.2s ease-in-out;  
-  padding: 1px;
-} */
+  padding-top: 2px;
+  height: 30px;
+}  */
 
 .company-logo {
   max-width: 150px; /* Adjust the maximum width as needed */
@@ -127,6 +142,7 @@ nav .menu span {
     margin: 0.4rem 0 0 1rem;
     /* Add margins to control spacing as needed */
   }
+
 }
 
 
