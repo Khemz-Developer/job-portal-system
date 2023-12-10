@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Sidebar";
-
+import VacancyForm from "./VacancyForm";
 const JobCreate = () => {
   return (
     <div>
@@ -8,7 +8,10 @@ const JobCreate = () => {
       <br></br>
       <br></br>
       <Sidebar>
-        <h3>Job Create Form</h3>
+        
+        <h3>Job Creation</h3>
+        <br></br>
+        <VacancyForm/>
       </Sidebar>
     </div>
   );
