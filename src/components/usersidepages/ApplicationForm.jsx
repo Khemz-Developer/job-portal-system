@@ -208,10 +208,10 @@ const ApplicationForm = () => {
         <FormControl variant="outlined" margin="normal" required style={{width:'40%',zIndex: 0}}>
         <DatePicker
           label="Date of Birth"
+          disableFuture
           inputFormat="MM/dd/yyyy"
           value={formData.dob}
           onChange={handleDateChange}
-          slotProps={{ textField: { variant: 'outlined' } }}
         />
         </FormControl>
         </LocalizationProvider>
