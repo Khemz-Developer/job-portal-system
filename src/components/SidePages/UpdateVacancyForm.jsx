@@ -1,7 +1,4 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from 'axios';
 import React, { useState } from 'react';
 
@@ -13,7 +10,7 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         jobPosition: '',
         jobDescription: '',
         salary:'',
-        dueDate: '',
+        // dueDate: '',
         workLocation:'',
         workType:'',
         workMethod:'',
@@ -46,10 +43,10 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         validateField(field,value);
     }
     
-    const handleDateChange = (date) => {
-        setEditedData({ ...editedData, dueDate:date });
+    // const handleDateChange = (date) => {
+    //     setEditedData({ ...editedData, dueDate:date });
         
-    };
+    // };
       
     const validateField = (field, value) => {
         setValidationErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
@@ -129,7 +126,7 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
           'jobPosition',
           'jobDescription',
           'salary',
-          'dueDate',
+        //   'dueDate',
           'workLocation',
           'workType',
           'workMethod',
@@ -227,17 +224,18 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
             <Typography color="error">{validationErrors.salary}</Typography>
         )}
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <FormControl variant="outlined" margin="normal" required style={{width:'40%',zIndex: 0}}>
         <DatePicker
             label="Due Date"
+            loading = "true"
             disablePast
             inputFormat="MM/dd/yyyy"
             value={editedData.dueDate}
             onChange={handleDateChange}
         />
         </FormControl>
-        </LocalizationProvider>
+        </LocalizationProvider> */}
         </div>
 
         <TextField
