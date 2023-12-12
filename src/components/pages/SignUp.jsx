@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { useNavigate } from "react-router-dom";
 import ImageLogo from "../../assets/images/22.png";
 import "./signup.css";
 
 const SignUp = () => {
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -68,8 +69,7 @@ const SignUp = () => {
           console.log('Form Data Submitted:', formData);
           alert('User Registration is successful');
 
-          // Redirect to a new route after successful form submission
-          // redirect('/users/signup');
+          navigate('/users/login')
         } 
       } catch (error) {
         console.error('Error submitting form:', error);

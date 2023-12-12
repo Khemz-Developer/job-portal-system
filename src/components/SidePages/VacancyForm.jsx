@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, FormGr
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import axios from 'axios';
 import React, { useState } from 'react';
 
 
@@ -37,16 +38,19 @@ const VacancyForm = () => {
         workType:'',
         workMethod:'',
         requiredSkills:'',
-        educationQualifications: '',
+        educationalQualifications: '',
       });
   
       const handleChange = (field) => (event) => {
         let value = event.target.value;
         if(field ==='salary' ){
-          // Remove leading zeros (except if it's just a single zero)
-          value = value.replace(/^0+(?=\d)/, '');
-        
-          if (value<0){
+          // Convert the value to a number
+          value = parseFloat(value);
+
+          // Ensure it's a valid number
+          if (isNaN(value)) {
+            // Handle the case where the value is not a valid number
+            // You can set it to 0 or show an error message
             value = 0;
           }
         }
@@ -126,27 +130,12 @@ const VacancyForm = () => {
         }));
       };
 
-      const handleSubmit = (event) => {
+      const handleSubmit = async (event) => {
         event.preventDefault();
     
         // Validate all fields before submission
         for (const field in formData) {
           validateField(field, formData[field]);
-          
-          // // Specific validation for educationalQualifications
-          // if (field === 'educationalQualifications') {
-          //   const selectedQualification = formData.educationalQualifications;
-
-          //   if (
-          //     ['ol', 'al', 'undergraduate', 'postgraduate'].includes(selectedQualification) 
-          //   ) {
-          //     // Valid educational qualification is selected and its subjects are filled
-          //   } else {
-          //     // Invalid educational qualification or its subjects are not filled
-          //     alert('Please fill educational qualification section');
-          //     return;
-          //   }
-          // }
           
           if (validationErrors[field]) {
             alert(`Please fix the errors`);
@@ -175,9 +164,20 @@ const VacancyForm = () => {
           return;
         }
 
-        alert('Job Vacancy successfully created')
+        try{
+          const response = await axios.post('http://localhost:3001/vacancies/create',formData);
+          
+          if(response.status===201){
+            console.log('Form Data:', formData);
+            alert('Job Vacancy successfully created');
+          }
+        }catch(error){
+            console.log(error);
+            alert('Unsuccessful.Please try again');
+
+        }
         // Handle form submission logic, e.g., sending data to a server
-        console.log('Form Data:', formData);
+        
         // Add logic to send data to the server or perform other actions
       };
   
@@ -198,10 +198,10 @@ const VacancyForm = () => {
         <FormControl sx={{width:'50%',zIndex: 0}} variant="outlined" margin="normal"  required>
           <InputLabel>Job Field</InputLabel>
           <Select value={formData.jobField} onChange={handleChange('jobField')} label="Job Field">
-            <MenuItem value="hr">HR</MenuItem>
-            <MenuItem value="finance">Finance</MenuItem>
-            <MenuItem value="telecommunication">Telecommunication</MenuItem>
-            <MenuItem value="software">Software </MenuItem>
+            <MenuItem value="HR">HR</MenuItem>
+            <MenuItem value="Finance">Finance</MenuItem>
+            <MenuItem value="Telecommunication">Telecommunication</MenuItem>
+            <MenuItem value="Software">Software </MenuItem>
           </Select>
         </FormControl>
 
@@ -256,10 +256,10 @@ const VacancyForm = () => {
         <FormControl variant="outlined" margin="normal" required style={{width:'40%',zIndex: 0}}>
         <DatePicker
           label="Due Date"
+          disablePast
           inputFormat="MM/dd/yyyy"
           value={formData.dueDate}
-          onChange={handleDateChange}
-          slotProps={{ textField: { variant: 'outlined' } }}
+          onChange={handleDateChange} 
         />
         </FormControl>
         </LocalizationProvider>
@@ -285,8 +285,8 @@ const VacancyForm = () => {
         <FormControl variant="outlined" margin="normal" style={{width:'50%',zIndex: 0}} required> 
           <InputLabel>Work Type</InputLabel>
           <Select value={formData.workType} onChange={handleChange('workType')} label="Work Type">
-            <MenuItem value="fullTime">Full-time</MenuItem>
-            <MenuItem value="partTime">Part-time</MenuItem>
+            <MenuItem value="Full-Time">Full-time</MenuItem>
+            <MenuItem value="Part-Time">Part-time</MenuItem>
           </Select>
         </FormControl>
 
@@ -295,8 +295,8 @@ const VacancyForm = () => {
           <InputLabel>Working Method</InputLabel>
           <Select value={formData.workMethod} onChange={handleChange('workMethod')} label="Work Method">
             <MenuItem value="OnSite">On-Site</MenuItem>
-            <MenuItem value="WorkfromHome">Work from Home</MenuItem>
-            <MenuItem value="hybrid">Hybrid</MenuItem>
+            <MenuItem value="Work from Home">Work from Home</MenuItem>
+            <MenuItem value="Hybrid">Hybrid</MenuItem>
           </Select>
         </FormControl>
         </div>
@@ -395,8 +395,8 @@ const VacancyForm = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.educationalQualifications==='undergraduate'}
-              onChange={handleCheckboxChange('undergraduate')}
+              checked={formData.educationalQualifications==='Undergraduate'}
+              onChange={handleCheckboxChange('Undergraduate')}
             />
           }
           label="Undergraduate"
@@ -407,8 +407,8 @@ const VacancyForm = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.educationalQualifications==='postgraduate'}
-              onChange={handleCheckboxChange('postgraduate')}
+              checked={formData.educationalQualifications==='Postgraduate'}
+              onChange={handleCheckboxChange('Postgraduate')}
             />
           }
           label="Postgraduate"
@@ -430,8 +430,8 @@ const VacancyForm = () => {
                 <Typography>
                   {formData.educationalQualifications === 'ol' && 'O/L'}
                   {formData.educationalQualifications === 'al' && 'A/L'}
-                  {formData.educationalQualifications === 'undergraduate' && 'Undergraduate'}
-                  {formData.educationalQualifications === 'postgraduate' && 'Postgraduate'}
+                  {formData.educationalQualifications === 'Undergraduate' && 'Undergraduate'}
+                  {formData.educationalQualifications === 'Postgraduate' && 'Postgraduate'}
                 </Typography>
 
                 {/* Display subjects if O/L or A/L is selected */}

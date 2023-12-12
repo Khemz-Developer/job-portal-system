@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../Sidebar";
+import ModifyTable from "./ModifyTable";
 
 const JobModify = () => {
   return (
@@ -8,7 +9,9 @@ const JobModify = () => {
       <br></br>
       <br></br>
       <Sidebar>
-        <h3>Job Modification Form</h3>
+        <h3>Job Modification </h3>
+        <br></br>
+        <ModifyTable/>
       </Sidebar>
     </div>
   );
