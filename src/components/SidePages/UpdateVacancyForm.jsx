@@ -18,7 +18,6 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         educationQualifications: '',
       });
     
-
     const handleChange = (field)=>(event)=>{
         let value = event.target.value;
         if(field ==='salary' ){
@@ -44,13 +43,21 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
     }
     
     // const handleDateChange = (date) => {
-    //     setEditedData({ ...editedData, dueDate:date });
-        
+
+    //  // Ensure that date is a valid Date object
+    //     if (date instanceof Date && !isNaN(date)) {
+    //         setEditedData({ ...editedData, dueDate: date });
+    //     } else {
+    //         // Handle the case where date is not a valid Date object
+    //         console.error("Invalid date:", date);
+    //     }
     // };
-      
+
     const validateField = (field, value) => {
+
         setValidationErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
-    }
+
+    };
 
     const handleCheckboxChange = (qualification) => () => {
         setEditedData((prevEditedData) => {
@@ -81,7 +88,18 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
           }));
         }
     };
-      
+
+    const handleRemoveSkill = (index) => () => {
+        setEditedData((prevData) => {
+            const updatedSkills = [...prevData.requiredSkills];
+            updatedSkills.splice(index, 1); // Remove the skill at the specified index
+            return {
+                ...prevData,
+                requiredSkills: updatedSkills,
+            };
+        });
+    };
+
     const handleAddSubject = () => {
         const maxSubjects =
           editedData.educationalQualifications === 'ol' ? 6 : 3;
@@ -160,8 +178,8 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
     
     return(
     <Container>
-        <Paper elevation={4} component={Box} p={4}>
-            <Typography variant="h4" gutterBottom style={{ textAlign: 'center' }}>
+        <Paper elevation={6} component={Box} p={4}>
+            <Typography variant="h5" gutterBottom style={{ textAlign: 'center' }}>
                 Edit Vacancy Details
             </Typography>
         <form onSubmit={handleUpdate}>
@@ -228,11 +246,11 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         <FormControl variant="outlined" margin="normal" required style={{width:'40%',zIndex: 0}}>
         <DatePicker
             label="Due Date"
-            loading = "true"
             disablePast
             inputFormat="MM/dd/yyyy"
-            value={editedData.dueDate}
+            value={(editedData.dueDate)}
             onChange={handleDateChange}
+            slotProps={{ textField: { variant: 'outlined' } }}
         />
         </FormControl>
         </LocalizationProvider> */}
@@ -287,13 +305,19 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         />
         </div>
         <button type="button" onClick={handleAddSkill}>
-        Add Skill
+            Add Skill
         </button>  
+
         {/* Display the skills as a bulleted list */}
         
         <ul>
             {editedData.requiredSkills.map((skill, index) => (
-            <li key={index}>{skill}</li>
+            <li key={index}>
+                {skill} &nbsp; &nbsp;
+                <button type="button" onClick={handleRemoveSkill(index)}>
+                    Remove
+                </button>
+            </li>
             ))}
         </ul>
         

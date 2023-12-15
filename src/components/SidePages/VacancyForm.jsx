@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 
 const VacancyForm = () => {
-  
+
     const [formData, setFormData] = useState({
         jobField: '',
         jobPosition: '',
@@ -170,6 +170,7 @@ const VacancyForm = () => {
           if(response.status===201){
             console.log('Form Data:', formData);
             alert('Job Vacancy successfully created');
+            console.log(response.data);
           }
         }catch(error){
             console.log(error);
@@ -260,6 +261,7 @@ const VacancyForm = () => {
           inputFormat="MM/dd/yyyy"
           value={formData.dueDate}
           onChange={handleDateChange} 
+          slotProps={{ textField: { variant: 'outlined' } }}
         />
         </FormControl>
         </LocalizationProvider>
