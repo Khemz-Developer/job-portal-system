@@ -1,7 +1,7 @@
 import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import UpdateVacancyForm from './UpdateVacancyForm';
+import CustomModal from './modal';
 const columns = [
     {id:'jobField', label:'Job Field', minWidth:100},
     {id:'jobPosition', label:'Job Position', minWidth:100},
@@ -19,6 +19,7 @@ const ModifyTable = () => {
     const [vacancyStatusRows,setVacancyStatusRows] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [isModalOpen, setModalOpen] = useState(false);
 
     // useEffect(() => {
     //     const dummyVacancyStatus = [
@@ -71,14 +72,22 @@ const ModifyTable = () => {
         //     console.error('Error fetching data:', error);
         // })
         console.log("Selected Row:", row);
-        setSelectedVacancy(row)
+        setSelectedVacancy(row);
+        setModalOpen(true);
     }
+
+    const handleModalClose = () => {
+        // Clear the selectedVacancy and close the modal
+        setSelectedVacancy(null);
+        setModalOpen(false);
+    };
 
     const handleUpdateTable = () => {
         // Implement logic to update the data in ModifyTable component
         // You might need to re-fetch the data or update the state, depending on your implementation.
         fetchData();
         setSelectedVacancy(null);
+        setModalOpen(false);
         console.log('Table Updated!');
       };
 
@@ -152,8 +161,8 @@ const ModifyTable = () => {
             <br></br>
             <br></br>
             <br></br>
-            {selectedVacancy && (
-            <UpdateVacancyForm vacancyData={selectedVacancy} onCancel={() => setSelectedVacancy(null)} onUpdate={handleUpdateTable} />
+            {isModalOpen && (
+                <CustomModal open={isModalOpen} onClose={handleModalClose} vacancyData={selectedVacancy} onUpdate={handleUpdateTable} onCancel={handleModalClose} />
             )}
         </Container>
         

@@ -212,6 +212,7 @@ const ApplicationForm = () => {
           inputFormat="MM/dd/yyyy"
           value={formData.dob}
           onChange={handleDateChange}
+          slotProps={{ textField: { variant: 'outlined' } }}
         />
         </FormControl>
         </LocalizationProvider>

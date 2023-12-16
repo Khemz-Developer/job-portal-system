@@ -8,6 +8,7 @@ import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import Vacancies from './components/pages/Vacancies';
 
+import { VacancyProvider } from './VacancyContext';
 import Footer from './components/Footer';
 import AcceptedCVs from './components/SidePages/AcceptedCVs';
 import JobCreate from './components/SidePages/JobCreate';
@@ -18,7 +19,6 @@ import UserJobStatus from './components/usersidepages/UserJobStatus';
 import UserJopApply from './components/usersidepages/UserJopApply';
 import UserVacancy from './components/usersidepages/UserVacancy';
 import PrivateRoute from './privateroute';
-
 function App() {
 
   return (
@@ -31,6 +31,7 @@ function App() {
         {/* <div className='content-containerr'><Navbar/></div> */}
         
         <AuthProvider>
+        <VacancyProvider>
         <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -53,6 +54,7 @@ function App() {
           <Route path="/admin/received" element={<PrivateRoute> <ReceivedCVs /> </PrivateRoute>} />
           
         </Routes>
+        </VacancyProvider>
         </AuthProvider>
         <Footer/>
       </div>
