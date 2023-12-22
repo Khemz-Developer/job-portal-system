@@ -29,8 +29,8 @@ const Login = () => {
       if (response.status === 200) {
         console.log('Login successful');
         alert('Login Successfull');
-        const { isAdmin } = response.data;
-        login();
+        const { token,isAdmin } = response.data;
+        login(token);
         if(isAdmin){
           navigate('../admin/create');
         }else{

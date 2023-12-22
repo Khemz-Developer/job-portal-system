@@ -17,13 +17,18 @@ export const VacancyProvider = ({children})=>{
     };
     const fetchVacancies = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/vacancies/get-all');
+          const response = await axios.get('http://localhost:3001/public/vacancies/get-all');
           const fetchedVacancies = response.data;
           const vacanciesToAdd = fetchedVacancies.map((vacancy) => ({
             key: vacancy._id,
-            heading: `${vacancy.jobField} - ${vacancy.jobPosition}`,
+            heading: `${vacancy.jobPosition} - ${vacancy.jobField}`,
+            field: vacancy.jobField,
+            position: vacancy.jobPosition,
             details: vacancy.jobDescription,
-            details1: vacancy.requiredSkills
+            details1: vacancy.requiredSkills,
+            eduDetails: vacancy.educationalQualifications,
+            olSubjects: vacancy.educationalQualifications==='ol' ? vacancy.olSubjects : '',
+            alSubjects: vacancy.educationalQualifications==='al' ? vacancy.alSubjects : '',
           }));
           
           addJobVacancy(vacanciesToAdd);

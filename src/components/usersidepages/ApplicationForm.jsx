@@ -3,11 +3,18 @@ import { Box, Button, Container, FormControl, InputLabel, MenuItem, Paper, Selec
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useAuth } from '../../authContext';
+import uploadFile from '../../utils/fileUpload';
+const ApplicationForm = ({jobTitle,jobField,jobPosition,eduDetails,olSubjects,alSubjects}) => {
+  //const [fileDropped, setFileDropped] = useState(false);
+  const {authData} = useAuth();
+  const token = authData.token;
 
-
-const ApplicationForm = () => {
   const [formData, setFormData] = useState({
+    jobPosition: jobPosition,
+    jobTitle: jobTitle,
     nameWithInitials: '',
     fullName: '',
     gender: '',
@@ -17,15 +24,22 @@ const ApplicationForm = () => {
     landlineNumber: '',
     mobileNumber: '',
     field: '',
-    educationQualifications: '',
+    eduDetails: eduDetails,
+    educationalQualifications: '',
+    olSubjects : olSubjects,
+    alSubjects : alSubjects,
+    olGrades: Array(olSubjects.length).fill(''),
+    alGrades: Array(alSubjects.length).fill(''),
     experience: '',
     extracurricular:'',
     otherQualifications: '',
     cvFile: null,
     cvFileDataUrl: null,
+    cvFileName: null,
   });
 
   const [validationErrors, setValidationErrors] = useState({
+    jobPosition:'',
     nameWithInitials: '',
     fullName: '',
     gender: '',
@@ -35,7 +49,7 @@ const ApplicationForm = () => {
     landlineNumber: '',
     mobileNumber: '',
     field: '',
-    educationQualifications: '',
+    educationalQualifications: '',
     experience: '',
     extracurricular:'',
     otherQualifications: '',
@@ -56,11 +70,11 @@ const ApplicationForm = () => {
   const handleDrop = (event) => {
     event.preventDefault();
     handleFileChange(event);
-    
-
+    //setFileDropped(true);
   };
 
   const handleFileChange = (event) => {
+
     const files = event.target.files || event.dataTransfer.files;
     
     // Check if files is not undefined or null
@@ -86,10 +100,10 @@ const ApplicationForm = () => {
         setFormData({ ...formData, cvFile: file, cvFileDataUrl: null  });
         setValidationErrors((prevErrors) => ({ ...prevErrors, cvFile: '' }));
 
-         // Read the file and display the image
+      // Read the file and display the image
       const reader = new FileReader();
       reader.onload = (e) => {
-        // Update the state with the data URL
+      // Update the state with the data URL
         setFormData((prevData) => ({
           ...prevData,
           cvFileDataUrl: e.target.result,
@@ -102,23 +116,28 @@ const ApplicationForm = () => {
       }
     }
   };
-  // const handleFileChange = (event) => {
-  //   const file = event.target.files[0];
-  
-  //   // Check file size (max size: 5MB)
-  //   if (file && file.size > 5 * 1024 * 1024) {
-  //     setValidationErrors((prevErrors) => ({
-  //       ...prevErrors,
-  //       cvFile: 'File size exceeds 5MB. Please choose a smaller file.',
-  //     }));
-  //   } else {
-  //     setFormData({ ...formData, cvFile: file });
-  //     setValidationErrors((prevErrors) => ({ ...prevErrors, cvFile: '' }));
-  //   }
-  // };
+
+  const handleRemoveFile = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      cvFile: null,
+      cvFileDataUrl: null,
+    }));
+    setValidationErrors((prevErrors) => ({ ...prevErrors, cvFile: '' }));
+  };
 
   const handleDateChange = (date) => {
     setFormData({ ...formData, dob: date });
+  };
+
+  const handleGradeChange = (event, index, eduType) => {
+    const updatedGrades = [...formData[`${eduType}Grades`]];
+    updatedGrades[index] = event.target.value;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [`${eduType}Grades`]: updatedGrades,
+    }));
   };
 
   const validateField = (field, value) => {
@@ -139,7 +158,7 @@ const ApplicationForm = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Validate all fields before submission
@@ -151,9 +170,57 @@ const ApplicationForm = () => {
       }
     }
 
-    // Handle form submission logic, e.g., sending data to a server
-    console.log('Form Data:', formData);
-    // Add logic to send data to the server or perform other actions
+    // Validate all required fields before submission
+    const requiredFields = [
+      'nameWithInitials',
+      'fullName',
+      'gender',
+      'dob',
+      'nic',
+      'email',
+      'mobileNumber',
+      'field',
+      'educationalQualifications',
+      'cvFile',
+    ];
+
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+
+    if (missingFields.length > 0) {
+        alert(`Some fields need to be filled`);
+        return;
+    }
+    const fileName = formData.cvFile.name;
+    try {
+      // Upload the CV file to Firebase Storage
+      const downloadURL = await uploadFile('CVs',fileName, formData.cvFile);
+  
+      // You can use the downloadURL as needed, for example, storing it in the database or displaying it to the user
+      console.log('CV file uploaded successfully. Download URL:', downloadURL);
+      const headers = {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+        },
+      };
+      
+      console.log('Headers:', headers); // Check headers in console
+      await axios.post('http://localhost:3001/applications/create',{
+        ...formData,
+        cvFileDataUrl: downloadURL,
+        cvFileName: fileName},headers);
+
+      window.location.reload();
+      // Add logic to send other form data to the server or perform other actions
+      alert('Successfully applied for the Vacancy');
+      console.log('Form Data:', formData);
+      
+  
+    } catch (error) {
+      // Handle errors 
+      console.error('Error submitting the form:', error);
+      alert('Error submitting the form. Please try again.');
+    }
+
   };
 
 
@@ -165,7 +232,7 @@ const ApplicationForm = () => {
       </Typography>
       <form onSubmit={handleSubmit}>
         <Typography variant="h6" gutterBottom>
-         Job Title: Trainee - Software Engineer
+            Job Title: {formData.jobTitle}
         </Typography>
         <TextField
           label="Name with Initials"
@@ -199,13 +266,13 @@ const ApplicationForm = () => {
         <FormControl variant="outlined" margin="normal" style={{width:'30%',zIndex: 0}} required> 
           <InputLabel>Gender</InputLabel>
           <Select value={formData.gender} onChange={handleChange('gender')} label="Gender">
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value="Male">Male</MenuItem>
+            <MenuItem value="Female">Female</MenuItem>
           </Select>
         </FormControl>
         
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <FormControl variant="outlined" margin="normal" required style={{width:'40%',zIndex: 0}}>
+        <FormControl variant="outlined"  margin="normal" style={{width:'40%',zIndex: 0}} required>
         <DatePicker
           label="Date of Birth"
           disableFuture
@@ -271,32 +338,78 @@ const ApplicationForm = () => {
           <Typography color="error">{validationErrors.landlineNumber}</Typography>
         )}
         </div>
-
-        <FormControl sx={{width:'30%',zIndex: 0}} variant="outlined" margin="normal" >
+        
+        <FormControl sx={{width:'30%',zIndex: 0}} variant="outlined" margin="normal" required>
           <InputLabel>Field</InputLabel>
-          <Select value={formData.field} onChange={handleChange('field')} label="Field">
-            <MenuItem value="hr">HR</MenuItem>
-            <MenuItem value="finance">Finance</MenuItem>
-            <MenuItem value="telecommunication">Telecommunication</MenuItem>
-            <MenuItem value="software">Software</MenuItem>
+          <Select value={formData.field} onChange={handleChange('field')} label="Field" >
+            <MenuItem value={jobField}>{jobField}</MenuItem>
           </Select>
         </FormControl>
         
         <TextField
-          
-          label="Education Qualifications"
+          label="Educational Qualifications"
           variant="outlined"
           fullWidth
           multiline
           required
           sx={{zIndex: 0}}
           rows={6}
-          value={formData.educationQualifications}
-          onChange={handleChange('educationQualifications')}
+          value={formData.educationalQualifications}
+          onChange={handleChange('educationalQualifications')}
           margin="normal"
         />
-        {validationErrors.educationQualifications && (
-          <Typography color="error">{validationErrors.educationQualifications}</Typography>
+        {validationErrors.educationalQualifications && (
+          <Typography color="error">{validationErrors.educationalQualifications}</Typography>
+        )}
+
+        {eduDetails === 'ol' && (
+          <div>
+            <Typography variant='h6' gutterBottom>
+                O/L Grades
+            </Typography>
+            <div style={{ display: 'flex',flexDirection: 'row', gap: '20px'}}>
+            {olSubjects.map((subject,index)=>{
+              return(
+                <div key={index}>
+                <Typography sx={{zIndex: 0}}>{subject}</Typography>
+                <TextField
+                  variant='outlined'
+                  required
+                  sx={{zIndex: 0}}
+                  value={formData.olGrades[index]}
+                  onChange={(event) => handleGradeChange(event, index, 'ol')}
+                  margin='normal'
+                />
+                </div>
+              )
+            })}
+            </div>
+          </div>
+        )}
+
+        {eduDetails === 'al' && (
+          <div>
+            <Typography variant='body1' gutterBottom>
+                A/L Grades
+            </Typography>
+            <div style={{ display: 'flex',flexDirection: 'row', gap: '20px'}}>
+            {alSubjects.map((subject,index)=>{
+              return(
+                <div key={index}>
+                <Typography sx={{justifyContent:'center', zIndex: 0}} >{subject}</Typography>
+                <TextField
+                  variant='outlined'
+                  required
+                  sx={{zIndex: 0}}
+                  value={formData.alGrades[index]}
+                  onChange={(event) => handleGradeChange(event, index, 'al')}
+                  margin='normal'
+                />
+              </div>
+              )
+            })}
+            </div>
+          </div>
         )}
 
         <TextField
@@ -357,11 +470,12 @@ const ApplicationForm = () => {
             position: 'relative',
           }}
         >
-              {!formData.cvFileDataUrl && (
-          <Typography variant="body2" color="textSecondary">
-            Drag and drop your ZIP file here (or click to choose)
-          </Typography>
+        {!formData.cvFileDataUrl && (
+              <Typography variant="body2" color="textSecondary">
+              Drag and drop your ZIP file here (or click to choose)
+            </Typography>
         )}
+          
         {formData.cvFileDataUrl && (
           <div
             style={{
@@ -380,6 +494,9 @@ const ApplicationForm = () => {
               Selected File: {formData.cvFile.name}
             </Typography>
             <DescriptionIcon style={{ fontSize: 96, marginTop: '8px' }} />
+            <Button variant="outlined" color="secondary" onClick={handleRemoveFile}>
+              Remove
+            </Button>
           </div>
         )}
         </div>
@@ -388,17 +505,22 @@ const ApplicationForm = () => {
           <Typography variant="body2" color="textSecondary">
             Please choose a zip file not exceeding 5MB with your CV,NIC copy,Birth Certificate & Educational Certificates(If needed) 
           </Typography>
+          {!formData.cvFileDataUrl && (
           <input
+            id='fileInput'
             type="file"
             accept=".zip"
             required
             onChange={handleFileChange}
-            style={{ margin: '8px 0' }}
-            
+            style={{ margin: '8px 0'}} 
+            //cursor: fileDropped ? 'not-allowed' : 'pointer'
+            //disabled={fileDropped}
           />
+          )}
           {validationErrors.cvFile && (
             <Typography color="error">{validationErrors.cvFile}</Typography>
           )}
+          
         </div>
 
         <div style={{ textAlign: 'center' }}>
