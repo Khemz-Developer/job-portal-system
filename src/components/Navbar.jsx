@@ -4,9 +4,16 @@ import companyLogo from "../assets/images/sltlogo.png";
 import { useAuth } from "../authContext";
 import "./navbar.css";
 const Navbar = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { authData, logout } = useAuth();
   const [menuOpen, setMemuOpen] = useState(false);
-
+  const handleLogout = async () => {
+    // Perform logout action
+    await logout();
+    // After logout is complete, navigate to the home page or another page
+    // This is to make sure that the navigation happens after the logout is done
+    // You may use react-router's useHistory hook for navigation
+    window.location.href = "/";
+  };
   return (
     //navbar ekt pitin div ekk demma
     <div className="content-containerr">
@@ -28,7 +35,7 @@ const Navbar = () => {
         <div className={`white-background-wrapper ${menuOpen ? "hidden" : ""}`}>
           <div className="">
             <ul className={menuOpen ? "open" : ""}>
-            {!isLoggedIn && (
+              {!authData && (
               <>
               <li>
                 <NavLink to="/" >Home</NavLink>
@@ -42,10 +49,8 @@ const Navbar = () => {
               </>
               )}
               <li>
-                {isLoggedIn ? (
-                  <NavLink to="/"> 
-                  <button onClick={logout}>Logout</button>
-                  </NavLink>
+                {authData ? (
+                  <button onClick={handleLogout}>Logout</button>
                 ) : (
                   <NavLink to="/users/login">Login</NavLink>
                 )}

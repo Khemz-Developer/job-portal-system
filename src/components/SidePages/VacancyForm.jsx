@@ -4,9 +4,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import axios from 'axios';
 import React, { useState } from 'react';
-
+import { useAuth } from '../../authContext';
 
 const VacancyForm = () => {
+    const {authData} = useAuth();
+    const token = authData.token;
 
     const [formData, setFormData] = useState({
         jobField: '',
@@ -165,8 +167,13 @@ const VacancyForm = () => {
         }
 
         try{
-          const response = await axios.post('http://localhost:3001/vacancies/create',formData);
-          
+          const headers = {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : '',
+            },
+          };
+          const response = await axios.post('http://localhost:3001/vacancies/create',formData,headers);
+          window.location.reload();
           if(response.status===201){
             console.log('Form Data:', formData);
             alert('Job Vacancy successfully created');

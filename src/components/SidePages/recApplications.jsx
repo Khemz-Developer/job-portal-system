@@ -1,59 +1,36 @@
 import { Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../authContext';
 import CustomModal from './modal';
 const columns = [
-    {id:'jobField', label:'Job Field', minWidth:100},
+    {id:'field', label:'Job Field', minWidth:100},
     {id:'jobPosition', label:'Job Position', minWidth:100},
-    {id:'createdDate', label:'Created Date', minWidth:100},
-    {id:'dueDate', label:'Due Date', minWidth:100},
+    {id:'nameWithInitials', label:'Name', minWidth:100},
+    {id:'submittedDate', label:'Submitted Date', minWidth:100},
+    {id:'cvFileDataUrl', label:'Attached Documents', minWidth:100},
     {id:'modifies', label:'Modifications', minWidth:100}
 ]
 
-// function createData(jobField, jobPosition, createdDate, dueDate, modifies,docId) {
-//     return { jobField, jobPosition, createdDate, dueDate, modifies, docId };
-// }
-
-const ModifyTable = () => {
-    const {authData} = useAuth();
-    const token = authData.token;
-    
-    const [selectedVacancy, setSelectedVacancy] = useState(null);
-    const [vacancyStatusRows,setVacancyStatusRows] = useState([]);
+const RecApplications = () => {
+    const [applicationStatusRows,setApplicationStatusRows] = useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [selectedApplication,setSelectedApplication] = useState(null);
     const [isModalOpen, setModalOpen] = useState(false);
-    
-   
 
-    const fetchData = async (token)=>{
-        const headers = {
-            headers: {
-              Authorization: token ? `Bearer ${token}` : '',
-            },
-          };
-          
+    const fetchData = async ()=>{
         try{
-            const response = await axios.get('http://localhost:3001/vacancies/get-all',headers);
-            setVacancyStatusRows(response.data);
+            const response = await axios.get('http://localhost:3001/applications/getByPending')
+            setApplicationStatusRows(response.data);
         }catch(error){
-            console.error('Error fetching data:',error);
+            console.error('Error fetching Data: ', error);
         }
     }
 
-    // const fetchById = async (vacancyId)=>{
-    //     try{
-    //         const response = await axios.get(`http://localhost:3001/vacancies/getByid/${vacancyId}`);
-    //         return response.data;
-    //     }catch(error){
-    //         console.error('Error fetching data:',error);
-    //     }
-    // }
-
     useEffect(()=>{
-        fetchData(token);
-    },[token]);
+        fetchData();
+    },[]);
+
 
     const handleChangePage = (event,newPage)=>{
         setPage(newPage);
@@ -62,52 +39,40 @@ const ModifyTable = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     }
-    
-    const handleEdit = (row)=>{
-        // fetchById(vacancyId)
-        // .then((data)=>{setSelectedVacancy(data)
-        // }).catch((error)=>{
-        //     console.error('Error fetching data:', error);
-        // })
-        console.log("Selected Row:", row);
-        setSelectedVacancy(row);
+
+    const handleView = (row)=>{
+        setSelectedApplication(row);
         setModalOpen(true);
-    }
+    };
 
     const handleModalClose = () => {
         // Clear the selectedVacancy and close the modal
-        setSelectedVacancy(null);
+        setSelectedApplication(null);
         setModalOpen(false);
     };
 
-    const handleUpdateTable = () => {
-        // Implement logic to update the data in ModifyTable component
-        // You might need to re-fetch the data or update the state, depending on your implementation.
-        fetchData(token);
-        setSelectedVacancy(null);
-        setModalOpen(false);
-        console.log('Table Updated!');
-      };
-
-    const handleDelete = async (vacancyId)=>{
+    const handleAccept = async (appId)=>{
         try{
-            const headers = {
-                headers: {
-                  Authorization: token ? `Bearer ${token}` : '',
-                },
-            };
-            await axios.delete(`http://localhost:3001/vacancies/deleteById/${vacancyId}`,headers);
-            fetchData(token);
+            await axios.patch(`http://localhost:3001/applications/editStatusAccept/${appId}`);
+            fetchData();
         }catch(error){
-            console.error('Error fetching data:',error);
+            console.error('Error editing status of applications: ', error);
+        }
+    };
+
+    const handleReject = async (appId)=>{
+        try{
+            await axios.patch(`http://localhost:3001/applications/editStatusReject/${appId}`);
+            fetchData();
+        }catch(error){
+            console.error('Error editing status of applications: ', error);
         }
     }
-    
     return (
         <Container maxWidth='lg'>
             <Paper elevation={12} sx={{p: '2%' }}>
                 <Typography variant='h5' gutterBottom textAlign="center" fontWeight="medium" sx={{ my: '10px' }}>
-                    Created Job Vacancy Details
+                    Submitted Applications for Job Vacancies
                 </Typography>
                 <TableContainer sx={{ maxHeight:500 }}>
                     <Table>
@@ -125,18 +90,24 @@ const ModifyTable = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {vacancyStatusRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row)=>(
+                        {applicationStatusRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row)=>(
                             <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
                                 {columns.map((column)=>(
                                     <TableCell key={column.id} align={column.align}>
                                         {column.id ==='modifies'?(
                                             <div>
-                                                <Button onClick={()=>{handleEdit(row)}} style={{backgroundColor:'green', color:'white', marginRight:'12px'}}>View & Edit</Button>
-                                                <Button onClick={()=>{handleDelete(row._id)}} style={{backgroundColor:'Red', color:'white'}}>Delete</Button>
+                                                <Button onClick={()=>{handleView(row)}} style={{backgroundColor:'green', color:'white', marginRight:'12px'}}>View</Button>
+                                                <Button onClick={()=>{handleAccept(row._id)}} style={{backgroundColor:'blue', color:'white', marginRight:'12px'}}>Accept</Button>
+                                                <Button onClick={()=>{handleReject(row._id)}} style={{backgroundColor:'Red', color:'white'}}>Reject</Button>
                                             </div>
-                                        ):(column.id==='createdDate' || column.id==='dueDate')?(
+                                        ): column.id==='submittedDate' ? (
                                             new Date(row[column.id]).toISOString().split('T')[0]
-                                        ):(
+                                        ): column.id === 'cvFileDataUrl' ? (
+                                            // Display file name and provide a link to download
+                                            <a href={row.cvFileDataUrl} download={row.cvFileName}>
+                                                {row.cvFileName}
+                                            </a>
+                                        ): (
                                             row[column.id]
                                         )}
                                         
@@ -151,7 +122,7 @@ const ModifyTable = () => {
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
-                    count={vacancyStatusRows.length}
+                    count={applicationStatusRows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -164,11 +135,10 @@ const ModifyTable = () => {
             <br></br>
             <br></br>
             {isModalOpen && (
-                <CustomModal open={isModalOpen} onClose={handleModalClose} Data={selectedVacancy} onUpdate={handleUpdateTable} onCancel={handleModalClose} scenario="update" />
+                <CustomModal open={isModalOpen} onClose={handleModalClose} Data={selectedApplication} onCancel={handleModalClose} scenario="view" />
             )}
         </Container>
-        
   );
 }
 
-export default ModifyTable
+export default RecApplications

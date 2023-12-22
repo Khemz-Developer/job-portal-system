@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from '../Sidebar'
-
+import AcceptedApplications from './AcceptedApplications'
 
 const AcceptedCVs = () => {
   return (
@@ -11,7 +11,8 @@ const AcceptedCVs = () => {
         <br></br>
      <Sidebar>
       <h3>Accepted CVs</h3>
-      
+          <br></br>
+          <AcceptedApplications/>
       </Sidebar> 
     </div>
   )

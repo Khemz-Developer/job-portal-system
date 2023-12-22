@@ -4,6 +4,7 @@ import {
   FaCommentAlt,
   FaRegChartBar,
   FaTh,
+  FaTrash,
   FaUserAlt,
 } from "react-icons/fa";
 
@@ -33,6 +34,11 @@ const Sidebar = ({ children }) => {
       path: "/admin/accept",
       name: "Accepted CVs",
       icon: <FaCommentAlt />,
+    },
+    {
+      path: "/admin/reject",
+      name: "Rejected CVs",
+      icon: <FaTrash />,
     },
   ];
 

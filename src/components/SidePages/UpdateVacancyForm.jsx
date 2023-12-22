@@ -1,10 +1,13 @@
 import { Box, Button, Checkbox, Container, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
-
+import { useAuth } from '../../authContext';
 const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
+    const {authData} = useAuth();
+    const token = authData.token;
+    
     const [editedData,setEditedData] = useState({...vacancyData});
-    console.log(editedData);
+
     const [validationErrors, setValidationErrors] = useState({
         jobField: '',
         jobPosition: '',
@@ -163,7 +166,12 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
         // console.log("Due Date Before Setting:", editedData.dueDate);
 
         try{
-          await axios.put(`http://localhost:3001/vacancies/edit/${editedData._id}`,editedData);
+          const headers = {
+                headers: {
+                  Authorization: token ? `Bearer ${token}` : '',
+                },
+          };
+          await axios.put(`http://localhost:3001/vacancies/edit/${editedData._id}`,editedData,headers);
           onUpdate();
         //   if(response.status===200){
         //     console.log('Form Data:', editedData);
