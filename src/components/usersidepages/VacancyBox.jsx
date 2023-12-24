@@ -16,7 +16,8 @@ const VacancyBox = () => {
       function createCard(card){
         return(
         <TaskCard key={card.key} heading={card.heading} details={card.details} details1 = {card.details1} field = {card.field} position = {card.position}
-        eduDetails = {card.eduDetails} olSubjects = {card.olSubjects} alSubjects = {card.alSubjects}
+        eduDetails = {card.eduDetails} olSubjects = {card.olSubjects} alSubjects = {card.alSubjects} salary={card.salary} dueDate={card.dueDate} workMethod = {card.workMethod}
+        workLocation = {card.workLocation} workType = {card.workType}
         />
         )
       }
