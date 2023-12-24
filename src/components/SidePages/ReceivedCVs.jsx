@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Sidebar";
-
+import RecApplications from "./recApplications";
 const ReceivedCVs = () => {
   return (
     <div>
@@ -9,6 +9,8 @@ const ReceivedCVs = () => {
       <br></br>
       <Sidebar>
         <h3> Received CVs</h3>
+        <br></br>
+        <RecApplications/>
       </Sidebar>
     </div>
   );

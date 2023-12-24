@@ -5,10 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../authContext';
 function TaskCard(props){
     const navigate = useNavigate();
-    const {isLoggedIn} = useAuth();
+    const {authData} = useAuth();
     const handleButtonClick = () => {
-        if (isLoggedIn) {
-          navigate('/users/apply');
+        if (authData) {
+          navigate('/users/apply', {
+          state: {
+            jobTitle: props.heading,
+            jobField: props.field,
+            jobPosition: props.position,
+            eduDetails: props.eduDetails,
+            olSubjects: props.olSubjects,
+            alSubjects: props.alSubjects
+          },
+          });
+          
         } else {
           navigate('/users/login');
         }

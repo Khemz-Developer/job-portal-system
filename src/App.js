@@ -14,6 +14,7 @@ import AcceptedCVs from './components/SidePages/AcceptedCVs';
 import JobCreate from './components/SidePages/JobCreate';
 import JobModify from './components/SidePages/JobModify';
 import ReceivedCVs from './components/SidePages/ReceivedCVs';
+import RejectedCVs from './components/SidePages/RejectedCVs';
 import SignUp from './components/pages/SignUp';
 import UserJobStatus from './components/usersidepages/UserJobStatus';
 import UserJopApply from './components/usersidepages/UserJopApply';
@@ -52,6 +53,7 @@ function App() {
           <Route path="/admin/modi" element={<PrivateRoute> <JobModify /> </PrivateRoute> } />
           <Route path="/admin/accept" element={<PrivateRoute><AcceptedCVs  /></PrivateRoute>} />
           <Route path="/admin/received" element={<PrivateRoute> <ReceivedCVs /> </PrivateRoute>} />
+          <Route path="/admin/reject" element={<PrivateRoute> <RejectedCVs /> </PrivateRoute>} />
           
         </Routes>
         </VacancyProvider>

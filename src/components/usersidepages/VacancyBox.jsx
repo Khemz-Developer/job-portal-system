@@ -8,25 +8,19 @@ import 'slick-carousel/slick/slick.css';
 import { useVacancyContext } from '../../VacancyContext';
 import TaskCard from './TaskCard';
 
-// const cards = [
-//     { heading: "Trainee Network Engineers", 
-//       details: 'We  are   hiring   new   training   network   engineers   for SLTMobitel,  Only   an  associate   degree,  a   bachelor’s  degree  in  computer  science,  information   technology, computer engineering, or a related field  undergraduates  (3rd year, 4th year),  and fresh graduates  are  proffered' },
-//     { heading: "ACCOUNTANT-FINANCIAL ACCOUNTING", details: 'Sri Lanka Telecom  is  in  search  of  high  caliber, result-oriented  and  qualified  individuals  capable of playing a key  role  in  the  finance  team. You will be engaged in a range  of  tasks  in  financial  accounting  in  a  highly IT-backed  work environment  and expected to collaborate with    subsidiary    companies    and    cross - functional departments  to  implement  key  business  drivers   and operational controls.' },
-//     { heading: "ENGINEERS", details: 'As an Engineer of the pioneering ICT solutions provider, you will be a distinguished members of our team, which is mainly  responsible for planning, designing, operating and  maintaining  our  state of the art ICT infrastructure.' },
-//     { heading: "TECHNICIANS", details: 'Technicians  are  mainly  responsible  in  install, maintain and   repair   electronic  communications  equipment   in telecommunication    networks    and    internet    supply systems.  Examine  telecommunications  equipment and systems to find and repair faults.  ' },
-//     { heading: "Telecommunication Assistant", details: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.' },
-//     { heading: "QA Engineer", details: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetur adipisicing elit.Lorem ipsum, dolor sit amet consectetu' }
-//   ];
+
 
 const VacancyBox = () => {
       const {jobVacancies} = useVacancyContext();
       
       function createCard(card){
         return(
-        <TaskCard key={card.key} heading={card.heading} details={card.details} details1 = {card.details1} />
+        <TaskCard key={card.key} heading={card.heading} details={card.details} details1 = {card.details1} field = {card.field} position = {card.position}
+        eduDetails = {card.eduDetails} olSubjects = {card.olSubjects} alSubjects = {card.alSubjects}
+        />
         )
-      }   
-
+      }
+      
       const NextArrow = (props) => {
           const { className, onClick } = props;
           return (

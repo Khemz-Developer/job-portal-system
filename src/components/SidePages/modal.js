@@ -1,10 +1,11 @@
 import { Box, Fade, Modal, Paper } from '@mui/material';
 import React from 'react';
 import UpdateVacancyForm from './UpdateVacancyForm';
+import ViewApplications from './ViewApplications';
 
-const CustomModal = ({ open, onClose, vacancyData, onUpdate, onCancel }) => {
+const CustomModal = ({ open, onClose, Data, onUpdate, onCancel, scenario }) => {
   return (
-    <Modal 
+    <Modal
       open={open}
       onClose={onClose}
       closeAfterTransition
@@ -12,7 +13,8 @@ const CustomModal = ({ open, onClose, vacancyData, onUpdate, onCancel }) => {
     >
       <Fade in={open}>
         <Paper elevation={4} component={Box} p={3} style={{ position: 'absolute', top: '55%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '100%', maxHeight: '80%', overflowY: 'auto' }}>
-          <UpdateVacancyForm  vacancyData={vacancyData} onUpdate={onUpdate} onCancel={onCancel} />
+         {scenario ==='update' && <UpdateVacancyForm  vacancyData={Data} onUpdate={onUpdate} onCancel={onCancel} /> }
+         {scenario ==='view' && <ViewApplications  applicationData={Data} onCancel={onCancel} /> }
         </Paper>
       </Fade>
     </Modal>
