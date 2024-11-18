@@ -55,7 +55,7 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log('Form Data Submitted:', formData);
     const hasErrors = !validateForm();
 
     if (hasErrors) {
