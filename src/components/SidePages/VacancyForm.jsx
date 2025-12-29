@@ -172,7 +172,7 @@ const VacancyForm = () => {
               Authorization: token ? `Bearer ${token}` : '',
             },
           };
-          const response = await axios.post('http://localhost:3001/vacancies/create',formData,headers);
+          const response = await axios.post(`${process.env.REACT_APP_API_URL}/vacancies/create`,formData,headers);
           window.location.reload();
           if(response.status===201){
             console.log('Form Data:', formData);

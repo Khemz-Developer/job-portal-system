@@ -21,7 +21,7 @@ const AcceptedApplications = () => {
     
     const fetchData = async ()=>{
         try{
-            const response = await axios.get('http://localhost:3001/applications/getByAccepted')
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/applications/getByAccepted`)
             setApplicationStatusRows(response.data);
         }catch(error){
             console.error('Error fetching Data: ', error);
@@ -52,7 +52,7 @@ const AcceptedApplications = () => {
 
     const handleReject = async (appId)=>{
         try{
-            await axios.patch(`http://localhost:3001/applications/editStatusReject/${appId}`);
+            await axios.patch(`${process.env.REACT_APP_API_URL}/applications/editStatusReject/${appId}`);
             fetchData();
         }catch(error){
             console.error('Error editing status of applications: ', error);

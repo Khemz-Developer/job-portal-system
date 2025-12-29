@@ -28,7 +28,7 @@ const UserStatus = () => {
           };
           
         try{
-            const response = await axios.get('http://localhost:3001/users/status',headers);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/status`,headers);
             setUserStatusRows(response.data);
         }catch(error){
             console.error('Error fetching data:',error);

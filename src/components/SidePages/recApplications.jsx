@@ -20,7 +20,7 @@ const RecApplications = () => {
 
     const fetchData = async ()=>{
         try{
-            const response = await axios.get('http://localhost:3001/applications/getByPending')
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/applications/getByPending`)
             setApplicationStatusRows(response.data);
         }catch(error){
             console.error('Error fetching Data: ', error);
@@ -53,7 +53,7 @@ const RecApplications = () => {
 
     const handleAccept = async (appId)=>{
         try{
-            await axios.patch(`http://localhost:3001/applications/editStatusAccept/${appId}`);
+            await axios.patch(`${process.env.REACT_APP_API_URL}/applications/editStatusAccept/${appId}`);
             fetchData();
         }catch(error){
             console.error('Error editing status of applications: ', error);
@@ -62,7 +62,7 @@ const RecApplications = () => {
 
     const handleReject = async (appId)=>{
         try{
-            await axios.patch(`http://localhost:3001/applications/editStatusReject/${appId}`);
+            await axios.patch(`${process.env.REACT_APP_API_URL}/applications/editStatusReject/${appId}`);
             fetchData();
         }catch(error){
             console.error('Error editing status of applications: ', error);
