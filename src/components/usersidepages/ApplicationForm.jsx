@@ -204,7 +204,7 @@ const ApplicationForm = ({jobTitle,jobField,jobPosition,eduDetails,olSubjects,al
       };
       
       console.log('Headers:', headers); // Check headers in console
-      await axios.post('http://localhost:3001/applications/create',{
+      await axios.post(`${process.env.REACT_APP_API_URL}/applications/create`,{
         ...formData,
         cvFileDataUrl: downloadURL,
         cvFileName: fileName},headers);

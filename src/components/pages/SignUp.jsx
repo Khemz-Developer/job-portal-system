@@ -55,7 +55,6 @@ const SignUp = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const hasErrors = !validateForm();
 
     if (hasErrors) {
@@ -63,7 +62,7 @@ const SignUp = () => {
     } else {
       try {
         // Make an HTTP POST request to your backend registration endpoint
-        const response = await axios.post('http://localhost:3001/users/signup', formData);
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, formData);
 
         if (response.status===201) {
           console.log('Form Data Submitted:', formData);

@@ -18,7 +18,7 @@ const RejectedApplications = () => {
     
     const fetchData = async ()=>{
         try{
-            const response = await axios.get('http://localhost:3001/applications/getByRejected');
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/applications/getByRejected`);
             setApplicationStatusRows(response.data);
         }catch(error){
             console.error('Error fetching Data: ', error);
@@ -40,7 +40,7 @@ const RejectedApplications = () => {
     const handleDelete = async(row)=>{
         try{
             const fileName = row.cvFileName;
-            await axios.delete(`http://localhost:3001/applications/deleteById/${row._id}`);
+            await axios.delete(`${process.env.REACT_APP_API_URL}/applications/deleteById/${row._id}`);
             const storage = getStorage();
             const fileRef = ref(storage, `CVs/${fileName}`);
             await deleteObject(fileRef);

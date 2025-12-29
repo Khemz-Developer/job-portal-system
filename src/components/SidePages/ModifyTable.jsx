@@ -35,21 +35,12 @@ const ModifyTable = () => {
           };
           
         try{
-            const response = await axios.get('http://localhost:3001/vacancies/get-all',headers);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/vacancies/get-all`,headers);
             setVacancyStatusRows(response.data);
         }catch(error){
             console.error('Error fetching data:',error);
         }
     }
-
-    // const fetchById = async (vacancyId)=>{
-    //     try{
-    //         const response = await axios.get(`http://localhost:3001/vacancies/getByid/${vacancyId}`);
-    //         return response.data;
-    //     }catch(error){
-    //         console.error('Error fetching data:',error);
-    //     }
-    // }
 
     useEffect(()=>{
         fetchData(token);
@@ -64,11 +55,6 @@ const ModifyTable = () => {
     }
     
     const handleEdit = (row)=>{
-        // fetchById(vacancyId)
-        // .then((data)=>{setSelectedVacancy(data)
-        // }).catch((error)=>{
-        //     console.error('Error fetching data:', error);
-        // })
         console.log("Selected Row:", row);
         setSelectedVacancy(row);
         setModalOpen(true);
@@ -96,7 +82,7 @@ const ModifyTable = () => {
                   Authorization: token ? `Bearer ${token}` : '',
                 },
             };
-            await axios.delete(`http://localhost:3001/vacancies/deleteById/${vacancyId}`,headers);
+            await axios.delete(`${process.env.REACT_APP_API_URL}/vacancies/deleteById/${vacancyId}`,headers);
             fetchData(token);
         }catch(error){
             console.error('Error fetching data:',error);

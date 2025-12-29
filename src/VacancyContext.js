@@ -17,7 +17,7 @@ export const VacancyProvider = ({children})=>{
     };
     const fetchVacancies = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/public/vacancies/get-all');
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/public/vacancies/get-all`);
           const fetchedVacancies = response.data;
           const vacanciesToAdd = fetchedVacancies.map((vacancy) => ({
             key: vacancy._id,

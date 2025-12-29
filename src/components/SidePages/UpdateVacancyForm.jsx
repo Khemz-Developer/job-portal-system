@@ -171,7 +171,7 @@ const UpdateVacancyForm = ({vacancyData, onCancel, onUpdate}) => {
                   Authorization: token ? `Bearer ${token}` : '',
                 },
           };
-          await axios.put(`http://localhost:3001/vacancies/edit/${editedData._id}`,editedData,headers);
+          await axios.put(`${process.env.REACT_APP_API_URL}/vacancies/edit/${editedData._id}`,editedData,headers);
           onUpdate();
         //   if(response.status===200){
         //     console.log('Form Data:', editedData);
